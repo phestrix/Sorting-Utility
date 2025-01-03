@@ -10,9 +10,16 @@ import java.util.ArrayList;
 @Setter
 @Getter
 public class FloatData extends DataType {
-    private final ArrayList<Double> data;
-    public void appendData(Double value) {
-        data.add(value);
+    private ArrayList<Double> data;
+
+    @Override
+    public <Double> void appendData(Double value) {
+        data.add((java.lang.Double) value);
+    }
+
+    @Override
+    public ArrayList<Double> getData() {
+        return null;
     }
 
     @Override

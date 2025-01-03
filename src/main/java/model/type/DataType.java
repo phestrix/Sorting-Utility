@@ -1,5 +1,11 @@
 package model.type;
 
+import java.util.ArrayList;
+
 public abstract class DataType {
-abstract public int getSize();
+    public abstract <T> void appendData(T value);
+
+    abstract public ArrayList<?> getData();
+
+    abstract public int getSize();
 }

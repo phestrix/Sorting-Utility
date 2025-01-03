@@ -12,9 +12,12 @@ import java.util.ArrayList;
 public class IntegerData extends DataType {
     private final ArrayList<Integer> data;
 
-    public void appendData(Integer value) {
-        data.add(value);
+
+    @Override
+    public <Integer> void appendData(Integer value) {
+        data.add((java.lang.Integer) value);
     }
+
     @Override
     public int getSize() {
         return data.size();

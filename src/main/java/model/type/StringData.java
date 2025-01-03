@@ -12,9 +12,11 @@ import java.util.ArrayList;
 public class StringData extends DataType {
     private final ArrayList<String> data;
 
-    public void appendData(String value) {
-        data.add(value);
+    @Override
+    public <String> void appendData(String value) {
+        data.add((java.lang.String) value);
     }
+
     @Override
     public int getSize() {
         return data.size();
