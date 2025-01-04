@@ -1,8 +1,10 @@
-package model;
+package model.cmd;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
 
 @Getter
 @Setter
@@ -13,4 +15,9 @@ public class CommandLineArgs {
     private boolean fullStat = false;
     private String prefix = "";
     private String outputPath = "";
+    private ArrayList<String> inputFiles;
+
+    public void addFileToList(String filename){
+        inputFiles.add(filename);
+    }
 }
