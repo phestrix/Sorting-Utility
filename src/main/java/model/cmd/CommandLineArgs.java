@@ -15,7 +15,7 @@ public class CommandLineArgs {
     private boolean fullStat = false;
     private String prefix = "";
     private String outputPath = "";
-    private ArrayList<String> inputFiles;
+    private ArrayList<String> inputFiles = new ArrayList<>();
 
     public void addFileToList(String filename){
         inputFiles.add(filename);

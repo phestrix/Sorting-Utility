@@ -6,20 +6,10 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 
-@AllArgsConstructor
 @Getter
 @Setter
-public class IntegerData extends DataType {
-    private final ArrayList<Integer> data;
-
-
-    @Override
-    public <Integer> void appendData(Integer value) {
-        data.add((java.lang.Integer) value);
-    }
-
-    @Override
-    public int getSize() {
-        return data.size();
+public class IntegerData extends DataType<Long> {
+    public IntegerData() {
+        this.data = new ArrayList<>();
     }
 }

@@ -6,24 +6,11 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 
-@AllArgsConstructor
 @Setter
 @Getter
-public class FloatData extends DataType {
-    private ArrayList<Double> data;
-
-    @Override
-    public <Double> void appendData(Double value) {
-        data.add((java.lang.Double) value);
+public class FloatData extends DataType<Float> {
+    public FloatData() {
+        this.data = new ArrayList<>();
     }
 
-    @Override
-    public ArrayList<Double> getData() {
-        return null;
-    }
-
-    @Override
-    public int getSize() {
-        return data.size();
-    }
 }

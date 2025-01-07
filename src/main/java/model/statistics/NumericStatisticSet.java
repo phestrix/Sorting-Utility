@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class StatisticSet<T extends Number> {
+public class NumericStatisticSet<T extends Number> {
     private int count;
     private T min;
     private T max;

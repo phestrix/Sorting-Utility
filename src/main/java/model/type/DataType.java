@@ -1,11 +1,29 @@
 package model.type;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
+import java.util.List;
 
-public abstract class DataType {
-    public abstract <T> void appendData(T value);
+@Getter
+public abstract class DataType<T> {
+    protected List<T> data;
 
-    abstract public ArrayList<?> getData();
+    public void appendData(T value) {
+        data.add(value);
+    }
 
-    abstract public int getSize();
+    public int getSize(){
+        return data.size();
+    }
+
+    public List<String> toStringList(){
+        List<String> list = new ArrayList<>();
+        for (T datum : data) {
+            String string = datum.toString();
+            list.add(string);
+        }
+        return list;
+    }
+
 }
