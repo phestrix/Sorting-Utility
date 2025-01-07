@@ -1,8 +1,7 @@
 package util;
 
 
-import exception.InvalidInputException;
-import model.CommandLineArgs;
+import model.cmd.CommandLineArgs;
 
 import java.util.ArrayList;
 
@@ -14,19 +13,27 @@ public class CommandLineParser {
             switch (arg) {
                 case "-f":
                     result.setFullStat(true);
+                    break;
                 case "-s":
                     result.setShortStat(true);
+                    break;
                 case "-p": {
                     result.setPrefix(args.get(args.indexOf(arg) + 1));
+                    break;
                 }
                 case "-o": {
                     result.setOutputPath(args.get(args.indexOf(arg) + 1));
+                    break;
                 }
                 case "-a": {
                     result.setAppendToExist(true);
+                    break;
                 }
                 default:
-                    throw new InvalidInputException("unexpected argument");
+                    if (arg.contains(".txt")) {
+                        result.addFileToList(arg);
+                        break;
+                    }
             }
 
         }
