@@ -19,8 +19,8 @@ public abstract class DataType<T> {
 
     public List<String> toStringList(){
         List<String> list = new ArrayList<>();
-        for (T datum : data) {
-            String string = datum.toString();
+        for (T node : data) {
+            String string = node.toString();
             list.add(string);
         }
         return list;

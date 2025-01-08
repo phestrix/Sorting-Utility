@@ -9,6 +9,7 @@ import model.type.IntegerData;
 import service.FileProcessor;
 import service.StatisticsService;
 import util.CommandLineParser;
+import util.DirectoryUtil;
 
 import java.util.*;
 
@@ -32,7 +33,7 @@ public class MainController {
         Map<String, List<DataType<?>>> dataMap = new LinkedHashMap<>();
 
         for (String file : commandLineArgs.getInputFiles()) {
-            var data = fileProcessor.getDatasFromFile(file);
+            var data = fileProcessor.getDataFromFile(file);
             for (Map.Entry<String, DataType<?>> entry : data.entrySet()) {
                 if (dataMap.containsKey(entry.getKey())) {
                     dataMap.get(entry.getKey()).add(entry.getValue());
@@ -79,13 +80,13 @@ public class MainController {
         for (var entry : map.entrySet()) {
             if (entry.getValue().get(0) instanceof FloatData) {
                 var stat = statisticsService.collectFullNumericStatistic(entry.getValue());
-                System.out.println("Type: Floats - " + entry.getKey() + ", count - " + stat.getCount() + ", mean - " + stat.getMean() + ", min - " + stat.getMin() + ", max - " + stat.getMax());
+                System.out.println("Type: Floats" + ", count - " + stat.getCount() + ", mean - " + stat.getMean() + ", min - " + stat.getMin() + ", max - " + stat.getMax());
             } else if (entry.getValue().get(0) instanceof IntegerData) {
                 var stat = statisticsService.collectFullNumericStatistic(entry.getValue());
-                System.out.println("Type: Integers - " + entry.getKey() + ", count - " + stat.getCount() + ", mean - " + stat.getMean() + ", min - " + stat.getMin() + ", max - " + stat.getMax());
+                System.out.println("Type: Integers" + ", count - " + stat.getCount() + ", mean - " + stat.getMean() + ", min - " + stat.getMin() + ", max - " + stat.getMax());
             } else {
                 var stat = statisticsService.collectFullStringStatistic(entry.getValue());
-                System.out.println("Type: Strings - " + entry.getKey() + ", count - " + stat.getCount() + ", min length - " + stat.getMinLength() + ", max length - " + stat.getMaxLength());
+                System.out.println("Type: Strings" + ", count - " + stat.getCount() + ", min length - " + stat.getMinLength() + ", max length - " + stat.getMaxLength());
             }
         }
     }
@@ -105,16 +106,28 @@ public class MainController {
         }
     }
 
-    private void checkUp(Map<String, List<DataType<?>>> map, CommandLineArgs commandLineArgs){
-        List<DataType<?>> list = new ArrayList<>();
-        Set<DataType<?>> uniqueValues = new HashSet<>();
-        for (List<DataType<?>> dataTypes : map.values()) {
-            for (DataType<?> dataType : dataTypes) {
-                if (uniqueValues.add(dataType)) {
-                    list.add(dataType);
-                }
+    private void checkUp(Map<String, List<DataType<?>>> map, CommandLineArgs commandLineArgs) {
+        if(!commandLineArgs.getOutputPath().isBlank()){
+            DirectoryUtil.checkAndCreateDirectory(commandLineArgs.getOutputPath());
+        }
+        for (Map.Entry<String, List<DataType<?>>> entry : map.entrySet()) {
+            for (DataType<?> dataType : entry.getValue()) {
+                String filePath = getFilePath(commandLineArgs, dataType);
+                fileProcessor.getWriter().setPath(filePath);
+                fileProcessor.getWriter().cleanBefore(commandLineArgs.isAppendToExist());
             }
         }
-        fileProcessor.cleanBeforeForPaths(list, commandLineArgs.isAppendToExist());
+    }
+
+    private static String getFilePath(CommandLineArgs commandLineArgs, DataType<?> dataType) {
+        String filePath;
+        if (dataType instanceof IntegerData) {
+            filePath = commandLineArgs.getOutputPath() + commandLineArgs.getPrefix() + "integers.txt";
+        } else if (dataType instanceof FloatData) {
+            filePath = commandLineArgs.getOutputPath() + commandLineArgs.getPrefix() + "floats.txt";
+        } else {
+            filePath = commandLineArgs.getOutputPath() + commandLineArgs.getPrefix() + "strings.txt";
+        }
+        return filePath;
     }
 }

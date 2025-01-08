@@ -7,4 +7,5 @@ public interface Writer {
     void setPath(String path);
     void setDataToWrite(List<String> data);
     void cleanBefore(boolean append);
+    void setAppend(boolean append);
 }

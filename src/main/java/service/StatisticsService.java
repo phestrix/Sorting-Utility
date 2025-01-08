@@ -36,7 +36,6 @@ public class StatisticsService {
             var set = new NumericStatisticSet<>(0, Float.MAX_VALUE, Float.MIN_VALUE, 0f, 0f);
             for (var node : listOfData) {
                 var tmp = getFullFloatStat((FloatData) node);
-                System.out.println(tmp);
                 set.setCount(set.getCount() + tmp.getCount());
                 set.setMax(set.getMax() < tmp.getMax() ? tmp.getMax() : set.getMax());
                 set.setMin(set.getMin() < tmp.getMin() ? tmp.getMin() : set.getMin());

@@ -54,5 +54,12 @@ public class DefaultFileWriter implements Writer {
 
         }
     }
+
+    @Override
+    public void setAppend(boolean append) {
+        if (append) {
+            cleanBefore(true);
+        }
+    }
 }
 
