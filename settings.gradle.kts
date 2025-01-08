@@ -1,2 +1,2 @@
-rootProject.name = "cft-test-task"
+rootProject.name = "util"
 
