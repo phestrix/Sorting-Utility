@@ -19,7 +19,7 @@ public class StatisticsService {
         return count;
     }
 
-    public <T extends Number> NumericStatisticSet<? extends Number> collectFullNumericStatistic(List<DataType<?>> listOfData) {
+    public NumericStatisticSet<? extends Number> collectFullNumericStatistic(List<DataType<?>> listOfData) {
         if (listOfData.get(0) instanceof IntegerData) {
             var set = new NumericStatisticSet<>(0, Long.MAX_VALUE, Long.MIN_VALUE, 0L, 0L);
             for (var node : listOfData) {
@@ -38,7 +38,7 @@ public class StatisticsService {
                 var tmp = getFullFloatStat((FloatData) node);
                 set.setCount(set.getCount() + tmp.getCount());
                 set.setMax(set.getMax() < tmp.getMax() ? tmp.getMax() : set.getMax());
-                set.setMin(set.getMin() < tmp.getMin() ? tmp.getMin() : set.getMin());
+                set.setMin(set.getMin() < tmp.getMin() ? set.getMin() : tmp.getMin());
                 set.setSum(set.getSum() + tmp.getSum());
                 set.setMean((set.getMean() * tmp.getCount() + tmp.getMean() * set.getCount())
                         / (set.getCount()) + tmp.getCount());
